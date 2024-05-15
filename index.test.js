@@ -17,27 +17,38 @@ describe('Restaurant and Menu Models', () => {
     });
 
     test('can create a Restaurant', async () => {
-        // TODO - write test
-        expect('NO TEST').toEqual('EXPECTED DATA')
+        const restaurant = await seedRestaurant[0];
+        expect(restaurant).toEqual({"cuisine": "FastFood", "location": "Texas", "name": "AppleBees"})
     });
 
     test('can create a Menu', async () => {
-        // TODO - write test
-        expect('NO TEST').toEqual('EXPECTED DATA')
+        const menu = await seedMenu[1];
+        expect(menu).toEqual({title: 'Lunch'})
     });
 
-    test('can find Restaurants', async () => {
-        // TODO - write test
-        expect('NO TEST').toEqual('EXPECTED DATA')
+    test('can update a Restaurant instance', async () => {
+        const restaurant = await Restaurant.create(seedRestaurant[0]);
+        const updatedRestaurant = await restaurant.update({ name: 'Updated Restaurant' });
+        expect(updatedRestaurant.name).toEqual('Updated Restaurant');
+    });
+    
+    test('can update a Menu instance', async () => {
+        const menu = await Menu.create(seedMenu[0]);
+        const updatedMenu = await menu.update({ title: 'Updated Menu' });
+        expect(updatedMenu.title).toEqual('Updated Menu');
     });
 
-    test('can find Menus', async () => {
-        // TODO - write test
-        expect('NO TEST').toEqual('EXPECTED DATA')
+    test('can delete a Restaurant instance', async () => {
+        const restaurant = await Restaurant.create(seedRestaurant[0]);
+        await restaurant.destroy();
+        const deletedRestaurant = await Restaurant.findByPk(restaurant.id);
+        expect(deletedRestaurant).toBeNull();
     });
 
-    test('can delete Restaurants', async () => {
-        // TODO - write test
-        expect('NO TEST').toEqual('EXPECTED DATA')
+    test('can delete a Menu instance', async () => {
+        const menu = await Menu.create(seedMenu[0]);
+        await menu.destroy();
+        const deletedMenu = await Menu.findByPk(menu.id);
+        expect(deletedMenu).toBeNull();
     });
 })
